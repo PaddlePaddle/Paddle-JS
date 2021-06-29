@@ -13,6 +13,7 @@ interface TensorParams {
     isPacked?: boolean;
     binding?: number;
     noLayout?: boolean;
+    key: string
 }
 
 export default class Tensor {
@@ -26,6 +27,7 @@ export default class Tensor {
     shape_texture: number[] = [];
     exceedMax: boolean = false;
     data: Float32Array | number[] | null = null;
+    key: string;
 
     constructor(opts: TensorParams) {
         this.opts = opts;
@@ -42,7 +44,7 @@ export default class Tensor {
         const shape = this.shape;
         // 原始数据个数
         this.total = shape.reduce((all: number, num: number) => all * num);
-
+        this.key = opts.key;
         if (opts.noLayout) {
             return;
         }

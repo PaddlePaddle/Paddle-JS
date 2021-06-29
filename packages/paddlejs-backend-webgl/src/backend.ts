@@ -98,7 +98,15 @@ export default class WebGLBackend extends PaddlejsBackend {
 
     createProgram({ name, outTensor, inputTensors, shaderParams, runtime, isFinalOp, isPacked }) {
         // genFscode  buildShader
-        const fsCode = buildShader(this.textureConf, name, inputTensors, shaderParams, runtime, isPacked);
+        const fsCode = buildShader({
+            textureConf: this.textureConf,
+            type: name,
+            inputTensors: inputTensors,
+            fShaderParams: shaderParams,
+            runtime: runtime,
+            isPacked: isPacked,
+            key: outTensor.key
+        });
 
         const programInstance = new GLProgram(this.gl, this.vShader as WebGLShader, fsCode, outTensor);
         programInstance.fsCode = fsCode;

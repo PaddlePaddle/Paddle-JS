@@ -44,7 +44,13 @@ const baseParams = {
     ]
 };
 
-function getTensorParams(inputTensors: Tensor[], ownParams: [], fShaderParams: object, runtime: number): opInfo {
+function getTensorParams(
+    inputTensors: Tensor[],
+    ownParams: [],
+    fShaderParams: object,
+    runtime: number,
+    key: string
+): opInfo {
     const tensorsParams = {};
     const opParams = {};
     const tensorNames = [] as string[];
@@ -99,6 +105,7 @@ function getTensorParams(inputTensors: Tensor[], ownParams: [], fShaderParams: o
     }
 
     opParams['runtime'] = runtime;
+    opParams['key'] = key;
 
     return { textureParams: tensorsParams, opParams, active_function: fShaderParams['active_function'] };
 }

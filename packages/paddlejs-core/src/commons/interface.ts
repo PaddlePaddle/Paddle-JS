@@ -16,6 +16,7 @@ export interface ModelVar {
     tensorName?: string;
     total?: number;
     runtime?: number;
+    key: string;
 }
 
 export interface Model {
@@ -36,6 +37,7 @@ export interface ModelConfig {
         height: number;
         width: number;
     };
+    chunkNum?: number;
     fill?: string; // 缩放后用什么颜色填充不足方形部分
     mean?: number[];
     std?: number[];
