@@ -11,7 +11,15 @@ import genSuffixCode from '../ops/atom/suffix';
 import * as commonFunc from '../ops/atom/common_func';
 import * as textureFunc from '../ops/atom/common_func_with_texture';
 
-export default function buildShader(textureConf, type, inputTensors, fShaderParams, runtime: number, isPacked = false) {
+export default function buildShader({
+    textureConf,
+    type,
+    inputTensors,
+    fShaderParams,
+    runtime,
+    isPacked,
+    key
+}) {
     let code = '';
     const opName = getExactOpName(type, isPacked);
     try {
@@ -20,7 +28,7 @@ export default function buildShader(textureConf, type, inputTensors, fShaderPara
 
         // textureList: [filter, origin, bias]
         const { textureParams, opParams, active_function } = getTensorParams(
-            inputTensors, params, fShaderParams, runtime
+            inputTensors, params, fShaderParams, runtime, key
         );
 
         const prefixCode = genPrefixCode(textureConf);

@@ -8,7 +8,7 @@ function recoverShape({ total_shape, channel, height_shape, width_shape }) {
 
 function mainFunc(
     { origin },
-    { strides = [], paddings = [], ksize, global_pooling, runtime }
+    { strides = [], paddings = [], ksize, global_pooling, key }
 ) {
     const [stride_v = 1, stride_h = 1] = strides;
     const [padTop = 0, padLeft = 0] = paddings;
@@ -16,7 +16,7 @@ function mainFunc(
     const originShape = recoverShape(origin);
     let computedIndex = '';
     let outputCode = 'setOutput(float(res));';
-    if (runtime === 0 && global_pooling === true) {
+    if (key === 'Mask' && global_pooling === true) {
         computedIndex = `
             if (curr > res) {
                 index = ${originShape[2] * originShape[3]} * out_pos[1] + ${originShape[3]} * oy + ox;
@@ -72,7 +72,8 @@ export default {
         'paddings',
         'ksize',
         'global_pooling',
-        'runtime'
+        'runtime',
+        'key'
     ],
     textureFuncConf: {
         origin: ['getValueFromTensorPos']
